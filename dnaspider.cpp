@@ -53,6 +53,7 @@ bool close_ctrl_mode = true; //x>, x:, x-
 bool close_ctrl_mode_strict = false; //x> 
 bool clear_after_stock = true; //<se, <db
 bool SlightPauseInBetweenConnects = true;
+string OutsTemplate = "strand: ";
 
 #pragma endregion
 
@@ -116,7 +117,7 @@ void shftRelease() {
 
 void printq() { kbHold(VK_LSHIFT); kb('<'); shftRelease(); }
 
-void prints() { if (showStrand) cout << "strand: " << strand << '\n'; }
+void prints() { if (showStrand) cout << OutsTemplate << strand << '\n'; }
 
 inline bool qqb(string s) {
 	if (qq.substr(0, s.length()) == s) return true; else return false;
@@ -468,37 +469,38 @@ void printXy() {
 void loadSe() {
 	ifstream f(settings); string cell;	while (getline(f, cell)) {
 		string se = cell.substr(0, cell.find(":") + 1);
-		int v = stoi(cell.substr(cell.find(":") + 1));
-		if (se == "ShowSettings:") { showSettings = v; continue; }
-		if (se == "StrandLengthMode:") { strandLengthMode = v; continue; }
-		if (se == "StrandLength:") { strandLength = v; continue; }
-		if (se == "CtrlScanOnlyMode:") { qScanOnly = v; continue; }
-		if (se == "CtrlKey:") { cKey = v; continue; }
-		if (se == "Frequency:") { frequency = v; continue; }
-		if (se == "RepeatKey:") { reKey = v; continue; }
-		if (se == "ShowStrand:") { showStrand = v; continue; }
-		if (se == "ShowOuts:") { showOuts = v; continue; }
-		if (se == "ShowIntro:") { showIntro = v; continue; }
-		if (se == "Ignore_A-Z:") { ignoreAZ = v; continue; }
-		if (se == "Ignore_0-9:") { ignore09 = v; continue; }
-		if (se == "Ignore_Space:") { ignoreSpace = v; continue; }
-		if (se == "Ignore_F1-F12:") { ignoreF1s = v; continue; }
-		if (se == "Ignore_Arrows:") { ignoreArrows = v; continue; }
-		if (se == "Ignore_Esc:") { ignoreEsc = v; continue; }
-		if (se == "Ignore_Tab:") { ignoreTab = v; continue; }
-		if (se == "Ignore_Enter:") { ignoreEnter = v; continue; }
-		if (se == "Ignore_Caps:") { ignoreCaps = v; continue; }
-		if (se == "Ignore_LShift:") { ignoreLShift = v; continue; }
-		if (se == "Ignore_RShift:") { ignoreRShift = v; continue; }
-		if (se == "Ignore_LAlt:") { ignoreLAlt = v; continue; }
-		if (se == "Ignore_RAlt:") { ignoreRAlt = v; continue; }
-		if (se == "Ignore_LCtrl:") { ignoreLCtrl = v; continue; }
-		if (se == "Ignore_RCtrl:") { ignoreRCtrl = v; continue; }
-		if (se == "StartHidden:") { startHidden = v; continue; }
-		if (se == "ClearStrandAfterStockCtrls:") { clear_after_stock = v; continue; }
-		if (se == "CloseCtrlMode:") { close_ctrl_mode = v; continue; }
-		if (se == "CloseCtrlModeStrict:") { close_ctrl_mode_strict = v; continue; }
-		if (se == "SlightPauseInBetweenConnects:") { SlightPauseInBetweenConnects = v; continue; }
+		string v = (cell.substr(cell.find(":") + 1));
+		if (se == "ShowSettings:") { showSettings = stoi(v); continue; }
+		if (se == "StrandLengthMode:") { strandLengthMode = stoi(v); continue; }
+		if (se == "StrandLength:") { strandLength = stoi(v); continue; }
+		if (se == "CtrlScanOnlyMode:") { qScanOnly = stoi(v); continue; }
+		if (se == "CtrlKey:") { cKey = stoi(v); continue; }
+		if (se == "Frequency:") { frequency = stoi(v); continue; }
+		if (se == "RepeatKey:") { reKey = stoi(v); continue; }
+		if (se == "ShowStrand:") { showStrand = stoi(v); continue; }
+		if (se == "ShowOuts:") { showOuts = stoi(v); continue; }
+		if (se == "OutsTemplate:") { OutsTemplate = (v.length() > 0) ? v.substr(1) : v; continue; }
+		if (se == "ShowIntro:") { showIntro = stoi(v); continue; }
+		if (se == "Ignore_A-Z:") { ignoreAZ = stoi(v); continue; }
+		if (se == "Ignore_0-9:") { ignore09 = stoi(v); continue; }
+		if (se == "Ignore_Space:") { ignoreSpace = stoi(v); continue; }
+		if (se == "Ignore_F1-F12:") { ignoreF1s = stoi(v); continue; }
+		if (se == "Ignore_Arrows:") { ignoreArrows = stoi(v); continue; }
+		if (se == "Ignore_Esc:") { ignoreEsc = stoi(v); continue; }
+		if (se == "Ignore_Tab:") { ignoreTab = stoi(v); continue; }
+		if (se == "Ignore_Enter:") { ignoreEnter = stoi(v); continue; }
+		if (se == "Ignore_Caps:") { ignoreCaps = stoi(v); continue; }
+		if (se == "Ignore_LShift:") { ignoreLShift = stoi(v); continue; }
+		if (se == "Ignore_RShift:") { ignoreRShift = stoi(v); continue; }
+		if (se == "Ignore_LAlt:") { ignoreLAlt = stoi(v); continue; }
+		if (se == "Ignore_RAlt:") { ignoreRAlt = stoi(v); continue; }
+		if (se == "Ignore_LCtrl:") { ignoreLCtrl = stoi(v); continue; }
+		if (se == "Ignore_RCtrl:") { ignoreRCtrl = stoi(v); continue; }
+		if (se == "StartHidden:") { startHidden = stoi(v); continue; }
+		if (se == "ClearStrandAfterStockCtrls:") { clear_after_stock = stoi(v); continue; }
+		if (se == "CloseCtrlMode:") { close_ctrl_mode = stoi(v); continue; }
+		if (se == "CloseCtrlModeStrict:") { close_ctrl_mode_strict = stoi(v); continue; }
+		if (se == "SlightPauseInBetweenConnects:") { SlightPauseInBetweenConnects = stoi(v); continue; }
 	}f.close();
 }
 
@@ -530,6 +532,7 @@ void printSe() {
 	cout << "ShowIntro: " << showIntro << endl;
 	cout << "ShowStrand: " << showStrand << endl;
 	cout << "ShowOuts: " << showOuts << endl;
+	cout << "OutsTemplate: " << OutsTemplate << endl;
 	cout << "CtrlScanOnlyMode: " << qScanOnly << endl;
 	cout << "CtrlKey: " << cKey << endl;
 	cout << "StrandLengthMode: " << strandLengthMode << endl;
@@ -622,7 +625,7 @@ int main() {
 	if (CreateDirectory(L"c:/dna", NULL)) {
 		cout << database << " not found.\nPress [1] to create.\n\n";
 		for (;; Sleep(150)) { if (GetAsyncKeyState(VK_ESCAPE)) { RemoveDirectory(L"c:/dna"); Sleep(150); GetAsyncKeyState(VK_ESCAPE); break; }if (GetAsyncKeyState(0x31) || GetAsyncKeyState(VK_NUMPAD1)) { break; } }
-		showOuts = false; ofstream fd(database); fd << "h:ello\n<h->Hello\n<i:><bs><h->!"; fd.close(); ofstream fs(settings); fs << "ShowSettings: 1\nShowIntro: 1\nShowStrand: 1\nShowOuts: 0\nCtrlScanOnlyMode: 0\nCtrlKey: 163\nStrandLengthMode: 0\nStrandLength: 3\nCloseCtrlMode: 0\nCloseCtrlModeStrict: 0\nRepeatKey: 145\nFrequency: 150\nIgnore_A-Z: 0\nIgnore_0-9: 0\nIgnore_Space: 0\nIgnore_F1-F12: 1\nIgnore_Arrows: 1\nIgnore_Esc: 1\nIgnore_Tab: 1\nIgnore_Enter: 1\nIgnore_Caps: 1\nIgnore_LShift: 1\nIgnore_RShift: 1\nIgnore_LAlt: 1\nIgnore_RAlt: 1\nIgnore_LCtrl: 1\nIgnore_RCtrl: 1\nStartHidden: 0\nClearStrandAfterStockCtrls: 1\nSlightPauseInBetweenConnects: 1"; fs.close(); out("<win>r<win-><app:run>" + settings + "<enter><ms:1500><win>r<win-><app:run>" + database + "<enter>");  showOuts = true; re = ""; strand.clear();
+		showOuts = false; ofstream fd(database); fd << "h:ello\n<h->Hello\n<i:><bs><h->!"; fd.close(); ofstream fs(settings); fs << "ShowSettings: 1\nShowIntro: 1\nShowStrand: 1\nShowOuts: 0\nOutsTemplate: " << OutsTemplate << "\nCtrlScanOnlyMode: 0\nCtrlKey: 163\nStrandLengthMode: 0\nStrandLength: 3\nCloseCtrlMode: 0\nCloseCtrlModeStrict: 0\nRepeatKey: 145\nFrequency: 150\nIgnore_A-Z: 0\nIgnore_0-9: 0\nIgnore_Space: 0\nIgnore_F1-F12: 1\nIgnore_Arrows: 1\nIgnore_Esc: 1\nIgnore_Tab: 1\nIgnore_Enter: 1\nIgnore_Caps: 1\nIgnore_LShift: 1\nIgnore_RShift: 1\nIgnore_LAlt: 1\nIgnore_RAlt: 1\nIgnore_LCtrl: 1\nIgnore_RCtrl: 1\nStartHidden: 0\nClearStrandAfterStockCtrls: 1\nSlightPauseInBetweenConnects: 1"; fs.close(); out("<win>r<win-><app:run>" + settings + "<enter><ms:1500><win>r<win-><app:run>" + database + "<enter>");  showOuts = true; re = ""; strand.clear();
 	}
 	else { ; }
 	loadSe();
@@ -666,7 +669,7 @@ int main() {
 		}
 		if (GetAsyncKeyState(reKey)) { out(tail); }//repeat
 		if (GetAsyncKeyState(VK_PAUSE)) { if (strand.substr(0, 1) == "<") strand = "<"; else strand.clear(); }
-		if (GetAsyncKeyState(VK_ESCAPE)) { if (!ignoreEsc) { kbRelease(VK_ESCAPE); GetAsyncKeyState(VK_ESCAPE); key("."); } GetAsyncKeyState(0x48); if (GetAsyncKeyState(0x48)) { if ((bool)IsWindowVisible(GetConsoleWindow()) == true) { ShowWindow(GetConsoleWindow(), SW_HIDE); Sleep(150); strand.clear(); } else { ShowWindow(GetConsoleWindow(), SW_SHOW); Sleep(150); strand.clear(); } if (showStrand && !qScanOnly) cout << "strand: " << strand << '\n'; } }
+		if (GetAsyncKeyState(VK_ESCAPE)) { if (!ignoreEsc) { kbRelease(VK_ESCAPE); GetAsyncKeyState(VK_ESCAPE); key("."); } GetAsyncKeyState(0x48); if (GetAsyncKeyState(0x48)) { if ((bool)IsWindowVisible(GetConsoleWindow()) == true) { ShowWindow(GetConsoleWindow(), SW_HIDE); Sleep(150); strand.clear(); } else { ShowWindow(GetConsoleWindow(), SW_SHOW); Sleep(150); strand.clear(); } if (showStrand && !qScanOnly) cout << OutsTemplate << strand << '\n'; } }
 		if (qScanOnly && strand.substr(0, 1) != "<") continue;
 #pragma region "az"
 		if (!ignoreAZ) {
